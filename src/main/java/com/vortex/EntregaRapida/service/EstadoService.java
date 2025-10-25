@@ -28,5 +28,11 @@ public class EstadoService {
                             JA_EXISTE_ENTIDADE_COM_NOME, "Estado", dto.nome());
                     throw new ConflitoDeEntidadeException(mensagemErroFormatado);
                 });
+
+        Estado estado = estadoMapper.toEntity(dto);
+
+        estado = estadoRepository.save(estado);
+
+        return estadoMapper.toResponse(estado);
     }
 }
