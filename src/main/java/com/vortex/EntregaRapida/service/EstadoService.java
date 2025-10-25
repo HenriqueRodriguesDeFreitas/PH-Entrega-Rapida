@@ -21,10 +21,12 @@ public class EstadoService {
         this.estadoMapper = estadoMapper;
     }
 
-    public EstadoResponseDto salvarNovoEstado(EstadoRequestDto dto){
-        estadoRepository.findByNomeIgnoreCase(dto.nome)
+    public EstadoResponseDto salvarNovoEstado(EstadoRequestDto dto) {
+        estadoRepository.findByNomeIgnoreCase(dto.nome())
                 .ifPresent(e -> {
-
+                    String mensagemErroFormatado = String.format(
+                            JA_EXISTE_ENTIDADE_COM_NOME, "Estado", dto.nome());
+                    throw new ConflitoDeEntidadeException(mensagemErroFormatado);
                 });
     }
 }
